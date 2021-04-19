@@ -10,7 +10,7 @@ app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_PORT'] = 3306
-app.config['MYSQL_DATABASE_DB'] = 'addressData'
+app.config['MYSQL_DATABASE_DB'] = 'airtravelData'
 mysql.init_app(app)
 
 
@@ -36,7 +36,7 @@ def form_edit_get(airtravel_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
-    return render_template('edit.html', title='Edit Form', passengers=result[0])
+    return render_template('edit.html', title='Edit Form', airtravel=result[0])
 
 
 @app.route('/edit/<int:airtravel_id>', methods=['POST'])
