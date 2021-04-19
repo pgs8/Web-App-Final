@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form action="/airtravel/new" method="POST">
+        <div class="row">
+            <div class="col">
+                <label for="fldMonth">Month</label>
+                <input id="fldMonth" type="text" class="form-control" placeholder="Month" name="fldMonth">
+            </div>
+            <div class="col">
+                <label for="fldColumn_1958">Year</label>
+                <input id="fldColumn_1958" type="text" class="form-control" placeholder="1958" name="fldColumn_1958">
+            </div>
+            <div class="col">
+                <label for="fldColumn_1959">Score</label>
+                <input id="fldColumn_1959" type="text" class="form-control" placeholder="1959" name="fldColumn_1959">
+            </div>
+            <div class="col">
+                <label for="fldColumn_1960">Year</label>
+                <input id="fldColumn_1960" type="text" class="form-control" placeholder="1960" name="fldColumn_1960">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+
+    </form>
+
+{% endblock %}

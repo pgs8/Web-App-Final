@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/edit/{{airtravel.id}}" method="post">
+    <div class="row">
+        <div class="col">
+            <label for="fldMonth">Month</label>
+            <input id="FldMonth" type="text" class="form-control" placeholder="Month" name="fldMonth" value="{{airtravel.Month}}">
+        </div>
+
+        <div class="col">
+            <label for="fldColumn_1958">Last Name</label>
+            <input id="fldColumn_1958" type="text" class="form-control" placeholder="1958"
+                   name="fldColumn_1958" value="{{airtravel.1958}}">
+        </div>
+
+
+<div class="col">
+            <label for="fldColumn_1959">1959</label>
+            <input id="fldColumn_1959" type="text" class="form-control" placeholder="1959" name="fldColumn_1959" value="{{airtravel.1959}}">
+        </div>
+    </div>
+
+<div class="col">
+    <label for="fldColumn_1960">1960</label>
+    <input id="fldColumn_1960" type="text" class="form-control" placeholder="1960" name="fldColumn_1960" value="{{airtravel.1960}}">
+</div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+
+</form>
+{% endblock %}
