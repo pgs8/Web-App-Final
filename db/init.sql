@@ -4,11 +4,12 @@ use airtravelData;
 
 CREATE TABLE IF NOT EXISTS airtravelInput
 (
-
+    'id' int AUTO_INCREMENT,
     'Month' VARCHAR(3) CHARACTER SET utf8,
     'Column_1958' INT,
     'Column_1959' INT,
-    'Column_1960' INT
+    'Column_1960' INT,
+    PRIMARY KEY ('id')
 );
 INSERT INTO airtravelInput (Month, Column_1958, Column_1959, Column_1960)
 VALUES
