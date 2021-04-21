@@ -1,27 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
-<form action="/edit.html/{{ airtravel.id }}" method="post">
+<form action="/edit/{{ airtravel.id }}" method="post">
     <div class="row">
         <div class="col">
             <label for="fldMonths">Month</label>
-            <input id="fldMonths" type="text" class="form-control" placeholder="Months" name="fldMonths" value="{{airtravel.Month}}">
+            <input id="fldMonths" type="text" class="form-control" placeholder="Months" name="fldMonths"
+                   value="{{ airtravel.Months }}">
         </div>
 
         <div class="col">
-            <label for="YEAR_1958">YEAR 1958</label>
-            <input id="YEAR_1958" type="text" class="form-control" placeholder="1958"
-                   name="YEAR_1958" value="{{airtravel.YEAR_1958}}">
+            <label for="fldYEAR_1958">1958</label>
+            <input id="fldYEAR_1958" type="text" class="form-control" placeholder="1958" name="fldYEAR_1958" value="{{ airtravel.YEAR_1958 }}">
         </div>
 
 <div class="col">
-            <label for="YEAR_1959">1959</label>
-            <input id="YEAR_1959" type="text" class="form-control" placeholder="1959" name="YEAR_1959" value="{{airtravel.1959}}">
+            <label for="fldYEAR_1959">1959</label>
+            <input id="fldYEAR_1959" type="text" class="form-control" placeholder="1959" name="fldYEAR_1959" value="{{ airtravel.YEAR_1959 }}">
         </div>
     </div>
 
 <div class="col">
-    <label for="YEAR_1960">1960</label>
-    <input id="YEAR_1960" type="text" class="form-control" placeholder="1960" name="YEAR_1960" value="{{airtravel.1960}}">
+    <label for="fldYEAR_1960">1960</label>
+    <input id="fldYEAR_1960" type="text" class="form-control" placeholder="1960" name="fldYEAR_1960" value="{{ airtravel.YEAR_1960 }}">
 </div>
 
     <button type="submit" class="btn btn-success">Save</button>

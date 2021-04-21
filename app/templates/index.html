@@ -12,10 +12,10 @@
     <tbody>
     {% for airtravel in airtravel %}
     <tr>
-        <td>{{ airtravel.1958 }}</td>
-        <td>{{ airtravel.1959  }}</td>
-        <td>{{ airtravel.1960  }}</td>
-        <td><a href="view.html/{{ airtravel.id }}">{{ airtravel.Month }}</a></td>
+        <td><a href="view/{{ airtravel.id }}">{{ airtravel.Months }}</a></td>
+        <td>{{ airtravel.YEAR_1958 }}</td>
+        <td>{{ airtravel.YEAR_1959 }}</td>
+        <td>{{ airtravel.YEAR_1960 }}</td>
     </tr>
     {% endfor %}
     </tbody>
