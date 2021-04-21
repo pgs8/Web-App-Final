@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 {% block content %}
 
-    <div class="card h-100">
+    <div class="card h-12">
         <div class="card-body">
-            <h4 class="card-title text-center">{{ airtravel.Month}}</h4>
+            <h4 class="card-title text-center">{{ airtravel.Months}}</h4>
 
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">1958: {{ airtravel.1958 }}</li>
-                <li class="list-group-item">1959: {{ airtravel.1959 }}</li>
-                <li class="list-group-item">1960: {{ airtravel.1960 }}</li>
+                <li class="list-group-item">YEAR_1958: {{ airtravel.YEAR_1958 }}</li>
+                <li class="list-group-item">YEAR_1959: {{ airtravel.YEAR_1959 }}</li>
+                <li class="list-group-item">YEAR_1960: {{ airtravel.YEAR_1960 }}</li>
             </ul>
             <div class="card-footer text-center">
                 <a href="/edit/{{ airtravel.id }}" class="card-link btn btn-primary">Edit</a>

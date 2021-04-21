@@ -16,11 +16,11 @@ mysql.init_app(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    user = {'username': 'Air travel Project'}
+    user = {'username': 'Air Travel'}
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM airtravelInput")
     result = cursor.fetchall()
-    return render_template('index.html', title='Home', user=user, passengers=result)
+    return render_template('index.html', title='Home', user=user, airtravel=result)
 
 
 @app.route('/view/<int:airtravel_id>', methods=['GET'])
@@ -28,7 +28,7 @@ def record_view(airtravel_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
-    return render_template('view.html', title='View Form', passengers=result[0])
+    return render_template('view.html', title='View Form', airtravel=result[0])
 
 
 @app.route('/edit/<int:airtravel_id>', methods=['GET'])
@@ -42,10 +42,10 @@ def form_edit_get(airtravel_id):
 @app.route('/edit/<int:airtravel_id>', methods=['POST'])
 def form_update_post(airtravel_id):
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldMonth'), request.form.get('fldColumn_1958'), request.form.get('fldColumn_1959'),
-                 request.form.get('fldColumn_1960'), airtravel_id)
-    sql_update_query = """UPDATE airtravelInput t SET t.Month = %s, t.Colunm_1958 = %s, t.Column_1959 = %s, t.Column_1960 = 
-    %s WHERE t.id = %s """
+    inputData = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'),
+                 request.form.get('fldYEAR_1960'), airtravel_id)
+    sql_update_query = """UPDATE airtravelInput t SET t.Months = %s, t.YEAR_1958 = %s, t.YEAR_1959 = %s, t.YEAR_1960 = 
+    %s WHERE t.id = %s"""
     cursor.execute(sql_update_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
@@ -53,15 +53,15 @@ def form_update_post(airtravel_id):
 
 @app.route('/airtravel/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New Data Form')
+    return render_template('new.html', title='New Travel Data Form')
 
 
 @app.route('/airtravel/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldMonth'), request.form.get('fldColumn_1958'), request.form.get('fldColumn_1959'),
-                 request.form.get('fldColumn_1960'))
-    sql_insert_query = """INSERT INTO airtravelInput (Month, Column_1958, Column_1959, Column_1960) VALUES (%s, %s, %s, %s) """
+    inputData = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'),
+                 request.form.get('fldYEAR_1960'))
+    sql_insert_query = """INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960) VALUES (%s, %s, %s, %s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
     return redirect("/", code=302)
@@ -109,7 +109,7 @@ def api_edit(airtravel_id) -> str:
 
 
 @app.route('/api/airtravel/<int:airtravel_id>', methods=['DELETE'])
-def api_delete(airtreavel_id) -> str:
+def api_delete(airtravel_id) -> str:
     resp = Response(status=210, mimetype='application/json')
     return resp
 

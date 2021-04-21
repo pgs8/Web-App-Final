@@ -1,10 +1,9 @@
-
 {% extends "layout.html" %}
 {% block content %}
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Month</th>
+        <th scope="col">Months</th>
         <th scope="col">1958</th>
         <th scope="col">1959</th>
         <th scope="col">1960</th>
@@ -16,7 +15,7 @@
         <td>{{ airtravel.1958 }}</td>
         <td>{{ airtravel.1959  }}</td>
         <td>{{ airtravel.1960  }}</td>
-        <td><a href="view/{{ airtravel.id }}">{{ airtravel.Month }}</a></td>
+        <td><a href="view.html/{{ airtravel.id }}">{{ airtravel.Month }}</a></td>
     </tr>
     {% endfor %}
     </tbody>
