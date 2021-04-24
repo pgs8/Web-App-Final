@@ -96,20 +96,36 @@ def api_retrieve(airtravel_id) -> str:
     return resp
 
 
-@app.route('/api/v1/airtravel/', methods=['POST'])
-def api_add() -> str:
-    resp = Response(status=201, mimetype='application/json')
-    return resp
-
-
 @app.route('/api/v1/airtravel/<int:airtravel_id>', methods=['PUT'])
 def api_edit(airtravel_id) -> str:
+    cursor = mysql.get_db().cursor()
+    content = request.json
+    input_data = (content['Months'], content['YEAR_1958'], content['YEAR_1959'], content['YEAR_1960'], airtravel_id)
+    sql_insert_query = """UPDATE airtravelInput t SET t.Months = %s, t.YEAR_1958 = %s, t.YEAR_1959 = %s, t.YEAR_1960 = %s WHERE t.id = %s"""
+    cursor.execute(sql_insert_query, input_data)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
+    return resp
+
+
+@app.route('/api/v1/airtravel/', methods=['POST'])
+def api_add() -> str:
+    content = request.json
+    cursor = mysql.get_db().cursor()
+    input_data = (content['Months'], content['YEAR_1958'], content['YEAR_1959'],content['YEAR_1960'])
+    sql_insert_query = """INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960) VALUES (%s, %s, %s, %s)"""
+    cursor.execute(sql_insert_query, input_data)
+    mysql.get_db().commit()
     resp = Response(status=201, mimetype='application/json')
     return resp
 
 
-@app.route('/api/airtravel/<int:airtravel_id>', methods=['DELETE'])
+@app.route('/api/v1/airtravel/<int:airtravel_id>', methods=['DELETE'])
 def api_delete(airtravel_id) -> str:
+    cursor = mysql.get_db().cursor()
+    sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
+    cursor.execute(sql_delete_query, airtravel_id)
+    mysql.get_db().commit()
     resp = Response(status=210, mimetype='application/json')
     return resp
 
