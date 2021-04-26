@@ -42,11 +42,9 @@ def form_edit_get(airtravel_id):
 @app.route('/edit/<int:airtravel_id>', methods=['POST'])
 def form_update_post(airtravel_id):
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'),
-                 request.form.get('fldYEAR_1960'), airtravel_id)
-    sql_update_query = """UPDATE airtravelInput t SET t.Months = %s, t.YEAR_1958 = %s, t.YEAR_1959 = %s, t.YEAR_1960 = 
-    %s WHERE t.id = %s"""
-    cursor.execute(sql_update_query, inputData)
+    input_data = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'), request.form.get('fldYEAR_1960'), airtravel_id)
+    sql_update_query = """UPDATE airtravelInput t SET t.Months = %s, t.YEAR_1958 = %s, t.YEAR_1959 = %s, t.YEAR_1960 = %s WHERE t.id = %s"""
+    cursor.execute(sql_update_query, input_data)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
@@ -59,10 +57,9 @@ def form_insert_get():
 @app.route('/airtravel/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
-    inputData = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'),
-                 request.form.get('fldYEAR_1960'))
+    input_Data = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'), request.form.get('fldYEAR_1960'))
     sql_insert_query = """INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960) VALUES (%s, %s, %s, %s) """
-    cursor.execute(sql_insert_query, inputData)
+    cursor.execute(sql_insert_query, input_Data)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
