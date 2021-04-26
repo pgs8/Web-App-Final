@@ -112,7 +112,8 @@ def api_add() -> str:
     content = request.json
     cursor = mysql.get_db().cursor()
     input_data = (content['Months'], content['YEAR_1958'], content['YEAR_1959'], content['YEAR_1960'])
-    sql_insert_query = """INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960) VALUES (%s, %s, %s, %s)"""
+    sql_insert_query = """INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960) 
+    VALUES (%s, %s, %s, %s)"""
     cursor.execute(sql_insert_query, input_data)
     mysql.get_db().commit()
     resp = Response(status=201, mimetype='application/json')
