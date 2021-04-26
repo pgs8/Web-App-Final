@@ -50,12 +50,12 @@ def form_update_post(airtravel_id):
     return redirect("/", code=302)
 
 
-@app.route('/airtravel/new', methods=['GET'])
+@app.route('/airtravels/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New Travel Data Form')
+    return render_template('new.html', title='New Travel Form')
 
 
-@app.route('/airtravel/new', methods=['POST'])
+@app.route('/airtravels/new', methods=['POST'])
 def form_insert_post():
     cursor = mysql.get_db().cursor()
     input_data = (request.form.get('fldMonths'), request.form.get('fldYEAR_1958'), request.form.get('fldYEAR_1959'),
@@ -75,7 +75,7 @@ def form_delete_post(airtravel_id):
     return redirect("/", code=302)
 
 
-@app.route('/api/v1/airtravel', methods=['GET'])
+@app.route('/api/v1/airtravels', methods=['GET'])
 def api_browse() -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput')
@@ -85,7 +85,7 @@ def api_browse() -> str:
     return resp
 
 
-@app.route('/api/v1/airtravel/<int:airtravel_id>', methods=['GET'])
+@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['GET'])
 def api_retrieve(airtravel_id) -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
@@ -95,7 +95,7 @@ def api_retrieve(airtravel_id) -> str:
     return resp
 
 
-@app.route('/api/v1/airtravel/<int:airtravel_id>', methods=['PUT'])
+@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['PUT'])
 def api_edit(airtravel_id) -> str:
     cursor = mysql.get_db().cursor()
     content = request.json
@@ -107,7 +107,7 @@ def api_edit(airtravel_id) -> str:
     return resp
 
 
-@app.route('/api/v1/airtravel/', methods=['POST'])
+@app.route('/api/v1/airtravels/', methods=['POST'])
 def api_add() -> str:
     content = request.json
     cursor = mysql.get_db().cursor()
@@ -119,7 +119,7 @@ def api_add() -> str:
     return resp
 
 
-@app.route('/api/v1/airtravel/<int:airtravel_id>', methods=['DELETE'])
+@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['DELETE'])
 def api_delete(airtravel_id) -> str:
     cursor = mysql.get_db().cursor()
     sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
