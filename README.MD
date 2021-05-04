@@ -10,5 +10,7 @@ Research and develop one unique feature per team member and intergrate it into t
 
 2.Use the statistics project to create API endpoints and then consume those endpoints using a JavaScript chart
 
-#Links 
+## [Change Log](/CHANGELOG.MD)
+
+# Links
 <insert links here>
