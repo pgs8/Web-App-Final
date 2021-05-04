@@ -1,19 +1,14 @@
 # Project Description
-REST API and use Postman to test GET,POST,PUT,and DELETE requests.
+Research and develop one unique feature per team member and intergrate it into the application from previous homework web application project.
 
-# Postman Screenshot Data
-![postman request output](screenshots/data.png)
-# GET
-![postman get](screenshots/get.png)
-# POST
-![postman post](screenshots/post.png)
-# GET after POST
-![postman get after post](screenshots/get_13.png)
-# GET DISPLAY FOR POST
-![postman display post](screenshots/get_after_post.png)
-# PUT
-![postman request output](screenshots/put.png)
-# DELETE
-![postman request output](screenshots/delete.png)
-# GET AFTER DELETE
-![postman request output](screenshots/get-after-delete.png)
+# Team Members
+1. Phil Stickna
+2. Paola Leiva 
+
+# Project Features
+1.Create a login and registration process that includes email verification.  You can use a service like SendGrid to send email and you should look for a Flask Plugin to help.
+
+2.Use the statistics project to create API endpoints and then consume those endpoints using a JavaScript chart
+
+#Links 
+<insert links here>

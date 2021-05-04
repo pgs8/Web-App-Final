@@ -2,26 +2,24 @@ CREATE DATABASE airtravelData;
 use airtravelData;
 
 CREATE TABLE IF NOT EXISTS airtravelInput
-
 (
-    `id` int(3) AUTO_INCREMENT,
-    `Months` VARCHAR(3) CHARACTER SET utf8,
-    `YEAR_1958` INT,
-    `YEAR_1959` INT,
-    `YEAR_1960` INT,
+    `id` int AUTO_INCREMENT,
+    `YEAR` INT,
+    `JAN` INT,
+    `FEB` INT,
+    `MAR` INT,
+    `APR` INT,
+    `MAY` INT,
+    `JUN` INT,
+    `JUL` INT,
+    `AUG` INT,
+    `SEP` INT,
+    `OCT` INT,
+    `NOV` INT,
+    `DECE` INT,
     PRIMARY KEY (`id`)
 );
-INSERT INTO airtravelInput (Months, YEAR_1958, YEAR_1959, YEAR_1960)
-VALUES
-    ('JAN', 340, 360, 417),
-    ('FEB', 318, 342, 391),
-    ('MAR', 362, 406, 419),
-    ('APR', 348, 396, 461),
-    ('MAY', 363, 420, 472),
-    ('JUN', 435, 472, 535),
-    ('JUL', 491, 548, 622),
-    ('AUG', 505, 559, 606),
-    ('SEP', 404, 463, 508),
-    ('OCT', 359, 407, 461),
-    ('NOV', 310, 362, 390),
-    ('DEC', 337, 405, 432);
+INSERT INTO airtravelInput (YEAR, JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DECE)
+VALUES (1958, 340, 318, 362, 348, 363, 435, 491, 505, 404, 359, 310, 337),
+       (1959, 360, 342, 406, 396, 420, 472, 548, 559, 463, 407, 362, 405),
+       (1960, 417, 391, 419, 461, 472, 535, 622, 606, 508, 461, 390, 432);

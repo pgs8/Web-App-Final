@@ -1,53 +1,50 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<canvas id="myChart" width="400" height="400"></canvas>
-
 <script>
-const DATA_COUNT = 7;
-const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+    `{% colors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"] %}`
+    `{% cntcolor = 0 %}`
+    `{% cntairtravel = 0 %}`
 
-const labels = Utils.months({count: 7});
+const labels = Utils.YEAR({count: 12});
 const data = {
   labels: labels,
   datasets: [
-    {
-      label: 'Dataset 1',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-    },
-    {
-      label: 'Dataset 2',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-    },
-    {
-      label: 'Dataset 2',
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
+      `{% for: airtravel in airtravels %}`,
+      {
+          label: `{% airtravel.YEAR %}`,
+          data: [`{% airtravel.JAN %}`,
+              `{% airtravel.FEB %}`,
+              `{% airtravel.MAR %}`,
+              `{% airtravel.APR %}`,
+              `{% airtravel.MAY %}`,
+              `{% airtravel.JUN %}`,
+              `{% airtravel.JUL %}`,
+              `{% airtravel.AUG %}`,
+              `{% airtravel.SEP %}`,
+              `{% airtravel.OCT %}`,
+              `{% airtravel.NOV %}`,
+              `{% airtravel.DECE %}`],
+          borderColor: Utils.CHART_COLORS `{% colors[cntcolor] %}`,
+          backgroundColor:Utils.transparentize
+    (Utils.CHART_COLORS ,`{% colors[cntcolor] %}`, 0.5)
+
     }
-  ]
-};
+    `{% if: cntairtravel >= len(airtravel) %}`
 
-  var myChart = new Chart(
-    document.getElementById('myChart'),
-    config
-  );
+    `{% break %}`
+    `{% endif %}`
 
+    `{% cntcolor += 1 %}`
+
+    `{% if (cntcolor)>= len(cntcolor) %}`
+    `{% cntcolor = 0 %}`
+    `{% endif %}`
+    `{% endfor %}`
+    ]
+
+}
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
+{% endbreak %}

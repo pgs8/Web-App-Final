@@ -3,19 +3,37 @@
 <table class="table">
     <thead>
     <tr>
-        <th scope="col">Months</th>
-        <th scope="col">1958</th>
-        <th scope="col">1959</th>
-        <th scope="col">1960</th>
+        <th scope="col">YEAR</th>
+        <th scope="col">JAN</th>
+        <th scope="col">FEB</th>
+        <th scope="col">MAR</th>
+        <th scope="col">APR</th>
+        <th scope="col">MAY</th>
+        <th scope="col">JUN</th>
+        <th scope="col">JUL</th>
+        <th scope="col">AUG</th>
+        <th scope="col">SEP</th>
+        <th scope="col">OCT</th>
+        <th scope="col">NOV</th>
+        <th scope="col">DECE</th>
     </tr>
     </thead>
     <tbody>
-    {% for airtravel in airtravel %}
+    {% for airtravel in airtravels %}
     <tr>
-        <td><a href="view/{{ airtravel.id }}">{{ airtravel.Months }}</a></td>
-        <td>{{ airtravel.YEAR_1958 }}</td>
-        <td>{{ airtravel.YEAR_1959 }}</td>
-        <td>{{ airtravel.YEAR_1960 }}</td>
+        <td><a href="view/{{ airtravel.id }}">{{ airtravel.YEAR }}</a></td>
+        <td>{{ airtravel.JAN }}</td>
+        <td>{{ airtravel.FEB }}</td>
+        <td>{{ airtravel.MAR }}</td>
+        <td>{{ airtravel.APR }}</td>
+        <td>{{ airtravel.MAY }}</td>
+        <td>{{ airtravel.JUN }}</td>
+        <td>{{ airtravel.JUL }}</td>
+        <td>{{ airtravel.AUG }}</td>
+        <td>{{ airtravel.SEP }}</td>
+        <td>{{ airtravel.OCT }}</td>
+        <td>{{ airtravel.NOV }}</td>
+        <td>{{ airtravel.DECE }}</td>
     </tr>
     {% endfor %}
     </tbody>
