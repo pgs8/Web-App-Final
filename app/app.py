@@ -1,5 +1,6 @@
+from typing import List, Dict
 import simplejson as json
-from flask import Flask, request, Response, redirect, render_template
+from flask import Flask, Response, render_template, redirect, request
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 
@@ -16,22 +17,21 @@ mysql.init_app(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    user = {'username': 'Air Travel'}
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM airtravelInput")
     result = cursor.fetchall()
-    return render_template('index.html', title='Home', user=user, airtravels=result)
+    return render_template('index.html', title='Home', airtravels=result)
 
 
-@app.route('/chart', methods=['GET'])
+@app.route("/chart", methods=['GET'])
 def api_airtravel_chartPage():
     return render_template('chart.html', title='Chart')
 
 
 @app.route('/api/v1/airtravel_chart', methods=['GET'])
-def api_airtravel_stats(airtravel_id) -> str:
+def api_airtravel_stats() -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
+    cursor.execute('select YEAR, count(*) as count from airtravelInput group by YEAR')
     result = cursor.fetchall()
     json_result = json.dumps(result)
     resp = Response(json_result, status=200, mimetype='application/json')
@@ -48,6 +48,7 @@ def record_view(airtravel_id):
 
 @app.route('/edit/<int:airtravel_id>', methods=['GET'])
 def form_edit_get(airtravel_id):
+    print(airtravel_id)
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
@@ -89,7 +90,7 @@ def form_insert_post():
     return redirect("/", code=302)
 
 
-@app.route('/delete/<int:airtravel_id>', methods=['POST'])
+@app.route('/delete/<int:airtravel_id>', methods=['GET'])
 def form_delete_post(airtravel_id):
     cursor = mysql.get_db().cursor()
     sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
@@ -125,6 +126,7 @@ def api_airtravel_save(airtravel_id) -> str:
 
 @app.route('/api/v1/airtravels/', methods=['POST'])
 def api_add() -> str:
+
     content = request.json
 
     cursor = mysql.get_db().cursor()

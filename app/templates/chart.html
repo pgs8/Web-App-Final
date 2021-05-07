@@ -13,7 +13,7 @@
             seriesData = [];
             data.forEach(element => {
                 seriesData.push(element.count)
-                categoriesData.push(element.YEAR);
+                categoriesData.push(element.year);
             });
             buildChart();
         });
@@ -22,7 +22,7 @@
 
         Highcharts.chart('container', {
             chart: {
-                type: 'Bar'
+                type: 'line'
             },
             title: {
                 text: 'Air Travel Data'
