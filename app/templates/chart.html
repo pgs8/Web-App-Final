@@ -1,50 +1,67 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<div class="col-12">
+    <div id="container"></div>
+</div>
+<script src="https://code.highcharts.com/9.1.0/highcharts.js"></script>
 <script>
-    `{% colors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"] %}`
-    `{% cntcolor = 0 %}`
-    `{% cntairtravel = 0 %}`
+    var seriesData = [];
+    var categoriesData = [];
+    fetch('/api/airtravel_chart')
+        .then(response => response.json())
+        .then(data => {
+            seriesData = [];
+            data.forEach(element => {
+                seriesData.push(element.count)
+                categoriesData.push(element.YEAR);
+            });
+            buildChart();
+        });
 
-const labels = Utils.YEAR({count: 12});
-const data = {
-  labels: labels,
-  datasets: [
-      `{% for: airtravel in airtravels %}`,
-      {
-          label: `{% airtravel.YEAR %}`,
-          data: [`{% airtravel.JAN %}`,
-              `{% airtravel.FEB %}`,
-              `{% airtravel.MAR %}`,
-              `{% airtravel.APR %}`,
-              `{% airtravel.MAY %}`,
-              `{% airtravel.JUN %}`,
-              `{% airtravel.JUL %}`,
-              `{% airtravel.AUG %}`,
-              `{% airtravel.SEP %}`,
-              `{% airtravel.OCT %}`,
-              `{% airtravel.NOV %}`,
-              `{% airtravel.DECE %}`],
-          borderColor: Utils.CHART_COLORS `{% colors[cntcolor] %}`,
-          backgroundColor:Utils.transparentize
-    (Utils.CHART_COLORS ,`{% colors[cntcolor] %}`, 0.5)
+    function buildChart() {
 
+        Highcharts.chart('container', {
+            chart: {
+                type: 'Bar'
+            },
+            title: {
+                text: 'Air Travel Data'
+            },
+            xAxis: {
+                categories: categoriesData,
+                title: {
+                    text: "Month"
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Year',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [
+                {
+                    name:"# Airtravel",
+                    data: seriesData
+                }
+            ]
+        });
     }
-    `{% if: cntairtravel >= len(airtravel) %}`
-
-    `{% break %}`
-    `{% endif %}`
-
-    `{% cntcolor += 1 %}`
-
-    `{% if (cntcolor)>= len(cntcolor) %}`
-    `{% cntcolor = 0 %}`
-    `{% endif %}`
-    `{% endfor %}`
-    ]
-
-}
 
 </script>
+
 {% endblock %}
-{% endbreak %}

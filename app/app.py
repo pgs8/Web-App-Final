@@ -23,6 +23,21 @@ def index():
     return render_template('index.html', title='Home', user=user, airtravels=result)
 
 
+@app.route('/chart', methods=['GET'])
+def api_airtravel_chartPage():
+    return render_template('chart.html', title='Chart')
+
+
+@app.route('/api/v1/airtravel_chart', methods=['GET'])
+def api_airtravel_stats(airtravel_id) -> str:
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
+    result = cursor.fetchall()
+    json_result = json.dumps(result)
+    resp = Response(json_result, status=200, mimetype='application/json')
+    return resp
+
+
 @app.route('/view/<int:airtravel_id>', methods=['GET'])
 def record_view(airtravel_id):
     cursor = mysql.get_db().cursor()
@@ -83,18 +98,8 @@ def form_delete_post(airtravel_id):
     return redirect("/", code=302)
 
 
-@app.route('/api/v1/airtravels', methods=['GET'])
-def api_browse() -> str:
-    cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM airtravelInput')
-    result = cursor.fetchall()
-    json_result = json.dumps(result)
-    resp = Response(json_result, status=200, mimetype='application/json')
-    return resp
-
-
 @app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['GET'])
-def api_retrieve(airtravel_id) -> str:
+def api_airtravel_view(airtravel_id) -> str:
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
@@ -103,23 +108,47 @@ def api_retrieve(airtravel_id) -> str:
     return resp
 
 
+@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['PUT'])
+def api_airtravel_save(airtravel_id) -> str:
+    cursor = mysql.get_db().cursor()
+    content = request.json
+    inputData = (content['fldYEAR'], content['fldJAN]'], content['fldFEB'], content['fldMAR'], content['fldAPR'],
+                 content['fldMAY'], content['fldJUN'], content['fldJUL'], content['fldAUG'], content['fldSEP'],
+                 content['fldOCT'], content['fldNOV'], content['fldDECE'], airtravel_id)
+    sql_update_query = """UPDATE airtravelInput t SET t.YEAR = %s, t.JAN = %s, t.FEB = %s, t.MAR = %s, t.APR = %s,
+    t.MAY = %s, t.JUN = %s, t.JUL = %s, t.AUG = %s, t.SEP = %s, t.OCT = %s, t.NOV = %s, t.DECE = %s WHERE t.id = %s"""
+    cursor.execute(sql_update_query, inputData)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
+    return resp
+
+
 @app.route('/api/v1/airtravels/', methods=['POST'])
 def api_add() -> str:
+    content = request.json
+
+    cursor = mysql.get_db().cursor()
+    inputData = (content['fldYEAR'], content['fldJAN'], content['fldFEB'],
+                 content['fldMAR'], content['fldAPR'], content['fldMAY'], content['fldJUN'], content['fldJUL'],
+                 content['fldAUG'], content['fldSEP'], content['fldOCT'], content['fldNOV'], content['fldDECE'])
+    sql_insert_query = """INSERT INTO airtravelInput (`YEAR`, `JAN`, `FEB`, `MAR`, `APR`, `MAY`, 'JUN', 'JUL', 'AUG',
+    'SEP', 'OCT', 'NOV', 'DECE') 
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s) """
+    cursor.execute(sql_insert_query, inputData)
+    mysql.get_db().commit()
     resp = Response(status=201, mimetype='application/json')
     return resp
 
 
-@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['PUT'])
-def api_edit(airtravel_id) -> str:
-    resp = Response(status=201, mimetype='application/json')
-    return resp
-
-
-@app.route('/api/airtravels/<int:airtravel_id>', methods=['DELETE'])
+@app.route('/api/v1/<int:airtravel_id>', methods=['DELETE'])
 def api_delete(airtravel_id) -> str:
-    resp = Response(status=210, mimetype='application/json')
+    cursor = mysql.get_db().cursor()
+    sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
+    cursor.execute(sql_delete_query, airtravel_id)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
     return resp
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
