@@ -7,3 +7,4 @@ Task | add env file to gitignore | Phil | 20210508
 Task | updated Requirements for SendGrid | Phil | 20210508
 Feature | Created sql table for registration info | Phil | 20210508
 Task | updated Requirements to support registration and logins | Phil | 20210508
+Task | updated app.py to run in debug mode | Phil | 20210508
