@@ -1,11 +1,15 @@
-from typing import List, Dict
 import simplejson as json
+import sendgrid
+import os
 from flask import Flask, Response, render_template, redirect, request
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
+from sendgrid.helpers.mail import Mail, Email, To, Content
+from python_http_client.exceptions import HTTPError
 
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
+sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -13,6 +17,21 @@ app.config['MYSQL_DATABASE_PASSWORD'] = 'root'
 app.config['MYSQL_DATABASE_PORT'] = 3306
 app.config['MYSQL_DATABASE_DB'] = 'airtravelData'
 mysql.init_app(app)
+
+
+def send_confirm_email(to_email, account_id):
+    try:
+        sender = Email(os.environ.get('EMAIL_USERNAME'))
+        recipient = To(to_email)
+        subject = "Please confirm your email"
+        content = Content("text/plain", "Click <a href=\"http://0.0.0.0/confirm/" + account_id + "\">here</a> to confirm your email.")
+        mail = Mail(sender, recipient, subject, content)
+        mail_json = mail.get()
+        response = sg.client.mail.send.post(request_body=mail_json)
+        print(response.status_code)
+        print(response.headers)
+    except HTTPError as e:
+        print(e.to_dict)
 
 
 @app.route('/', methods=['GET'])

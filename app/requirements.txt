@@ -1,9 +1,4 @@
 Flask
-Flask-Bcrypt
-Flask-DebugToolbar
-Flask-Login
 flask-mysql
-email-validator
-itsdangerous
 sendgrid
 simplejson

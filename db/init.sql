@@ -25,13 +25,14 @@ VALUES (1958, 340, 318, 362, 348, 363, 435, 491, 505, 404, 359, 310, 337),
        (1960, 417, 391, 419, 461, 472, 535, 622, 606, 508, 461, 390, 432);
 
 
-CREATE TABLE IF NOT EXISTS `accounts` (
+CREATE TABLE IF NOT EXISTS accounts
+(
 	`id` int(11) NOT NULL AUTO_INCREMENT,
   	`username` varchar(50) NOT NULL,
   	`password` varchar(255) NOT NULL,
   	`email` varchar(100) NOT NULL,
-  	'confirmed' boolean DEFAULT FALSE NOT NULL,
+  	`confirmed` boolean DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`)
 );
-
-INSERT INTO `accounts` (`id`, `username`, `password`, `email`, `confirmed`) VALUES (1, 'test', 'test', 'test@test.com', TRUE);
+INSERT INTO accounts (`id`, `username`, `password`, `email`, `confirmed`)
+VALUES (1, 'test', 'test', 'test@test.com', TRUE);
