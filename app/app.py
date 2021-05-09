@@ -3,6 +3,7 @@ import sendgrid
 import os
 from flask import Flask, Response, render_template, redirect, request
 from flaskext.mysql import MySQL
+from markupsafe import Markup
 from pymysql.cursors import DictCursor
 from sendgrid.helpers.mail import Mail, Email, To, Content
 from python_http_client.exceptions import HTTPError
@@ -10,6 +11,7 @@ from python_http_client.exceptions import HTTPError
 app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
 sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+html_string_license = Markup(os.environ.get('STRING_COPYRIGHT'))
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
@@ -32,6 +34,12 @@ def send_confirm_email(to_email, account_id):
         print(response.headers)
     except HTTPError as e:
         print(e.to_dict)
+
+
+@app.route('/login.html', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html', title='Login', copyright_notice=html_string_license)
 
 
 @app.route('/', methods=['GET'])
@@ -172,4 +180,6 @@ def api_delete(airtravel_id) -> str:
 
 
 if __name__ == '__main__':
+    print(html_string_license)
     app.run(host='0.0.0.0', debug=True)
+    print('Hello world')

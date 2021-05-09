@@ -3,6 +3,8 @@ services:
   app:
     build: ./app
     container_name: "Flask_App_6"
+    env_file:
+      - IS601_group_final.env
     links:
       - db
     ports:

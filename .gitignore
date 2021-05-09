@@ -1,3 +1,3 @@
 /venv/
 .idea
-app/sendgrid.env
+IS601_group_final.env
