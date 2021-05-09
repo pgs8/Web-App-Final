@@ -40,6 +40,12 @@ def send_confirm_email(to_email, account_id):
         print(e.to_dict)
 
 
+@app.before_request
+def before_request():
+    if 'logged_in' not in session and (request.endpoint != 'login' or request.endpoint != 'register'):
+        return redirect(url_for('login'))
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -53,7 +59,7 @@ def login():
         account = cursor.fetchone()
 
         if account and account['confirmed']:
-            session['loggedin'] = True
+            session['logged_in'] = True
             session['id'] = account['id']
             session['username'] = account['username']
             return redirect(url_for('index'))
