@@ -35,4 +35,5 @@ CREATE TABLE IF NOT EXISTS accounts
     PRIMARY KEY (`id`)
 );
 INSERT INTO accounts (`id`, `username`, `password`, `email`, `confirmed`)
-VALUES (1, 'test', 'test', 'test@test.com', TRUE);
+VALUES (1, 'test', 'test', 'test@test.com', TRUE),
+       (2, 'test2', 'test2', 'test2@test.com', FALSE);

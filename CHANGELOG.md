@@ -12,3 +12,4 @@ Feature | added function to send confirmation email | Phil | 20210509
 Feature | created _base template | Phil | 20210509
 Feature | created login.html template | Phil | 20210509
 Fix | corrected issue with environment file import | Phil | 20210509 
+Feature | got login working! | Phil | 20210509

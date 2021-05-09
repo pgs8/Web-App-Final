@@ -1,10 +1,10 @@
 {% extends "_base.html" %}
 {% block content %}
     <div class="main">
-        <p class="sign" align="center">Login</p>
-        <form class="form1" action="" method="POST">
-            <input class="un " type="text" align="center" placeholder="Username" name="username" required>
-            <input class="pass" type="password" align="center" placeholder="Password" name="password" required>
+    <p>{{ msg }}</p>
+        <form action="/login" method="POST">
+            <input id="fldName" type="text" placeholder="Username" name="username" required>
+            <input id="fldPass" type="password" placeholder="Password" name="password" required>
             <button class="submit" type="submit">Login</button>
         </form>
     </div>
