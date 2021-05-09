@@ -1,7 +1,7 @@
 import simplejson as json
 import sendgrid
 import os
-from flask import Flask, Response, render_template, redirect, request, session, url_for
+from flask import Flask, Response, render_template, redirect, request, session, url_for, g
 from flaskext.mysql import MySQL
 from pymysql.cursors import DictCursor
 from markupsafe import Markup
@@ -30,7 +30,8 @@ def send_confirm_email(to_email, account_id):
         sender = Email(os.environ.get('EMAIL_USERNAME'))
         recipient = To(to_email)
         subject = "Please confirm your email"
-        content = Content("text/plain", "Click <a href=\"http://0.0.0.0/confirm/" + account_id + "\">here</a> to confirm your email.")
+        content = Content("text/plain",
+                          "Click <a href=\"http://0.0.0.0/confirm/" + account_id + "\">here</a> to confirm your email.")
         mail = Mail(sender, recipient, subject, content)
         mail_json = mail.get()
         response = sg.client.mail.send.post(request_body=mail_json)
@@ -42,7 +43,11 @@ def send_confirm_email(to_email, account_id):
 
 @app.before_request
 def before_request():
-    if 'logged_in' not in session and (request.endpoint != 'login' or request.endpoint != 'register'):
+    if request.path == url_for('login') or request.path == url_for('register'):
+        return
+    elif 'logged_in' in session and session['logged_in'] == True:
+        return
+    else:
         return redirect(url_for('login'))
 
 
@@ -69,7 +74,20 @@ def login():
             msg = 'Incorrect username/password!'
         return render_template('login.html', title='Login', msg=msg, copyright_notice=html_string_license)
     else:
-        return render_template('login.html', title='Login', msg='Please fill out the form!', copyright_notice=html_string_license)
+        return render_template('login.html', title='Login', msg='Please fill out the form!',
+                               copyright_notice=html_string_license)
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html', title='Register', copyright_notice=html_string_license)
 
 
 @app.route('/', methods=['GET'])
@@ -183,7 +201,6 @@ def api_airtravel_save(airtravel_id) -> str:
 
 @app.route('/api/v1/airtravels/', methods=['POST'])
 def api_add() -> str:
-
     content = request.json
 
     cursor = mysql.get_db().cursor()

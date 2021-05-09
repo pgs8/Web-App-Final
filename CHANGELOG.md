@@ -13,4 +13,5 @@ Feature | created _base template | Phil | 20210509
 Feature | created login.html template | Phil | 20210509
 Fix | corrected issue with environment file import | Phil | 20210509 
 Feature | got login working! | Phil | 20210509
-Feature | redirected non-logged in requests to login form | Phil | 20210509  
+Feature | redirected non-logged in requests to login form | Phil | 20210509
+Feature | added logout route, fixed an infinite redirect | Phil | 20210509

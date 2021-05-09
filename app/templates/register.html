@@ -2,11 +2,12 @@
 {% block content %}
     <div class="main">
     <p>{{ msg }}</p>
-        <form action="/login" method="POST">
+        <form action="/register" method="POST">
             <input id="fldName" type="text" placeholder="Username" name="username" required>
             <input id="fldPass" type="password" placeholder="Password" name="password" required>
-            <button class="submit" type="submit">Login</button>
+            <input id="fldEmail" type="email" placeholder="Email Address" name="email" required>
+            <button class="submit" type="submit">Register</button>
         </form>
-    <p>Don't have an account? <a href="register">Create one!</a></p>
+    <p>Already have an account? <a href="/login">Login!</a></p>
     </div>
 {% endblock %}

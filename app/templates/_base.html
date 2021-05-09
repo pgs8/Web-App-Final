@@ -9,6 +9,7 @@
 <body>
 <!-- Page Content -->
 <main class="container container rounded px-lg-5 px-1" role="main">
+    {% include "nav.html" %}
     {% block content %}
     {% endblock %}
 </main>
@@ -17,7 +18,7 @@
 <footer class="py-5 mt-5 bg-dark">
     <div class="container">
         <p class="m-0 text-center text-white">
-             {{ copyright_notice }}
+            {{ copyright_notice }}
         </p>
     </div>
     <!-- /.container -->
