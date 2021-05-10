@@ -2,18 +2,19 @@
 {% block content %}
 <div class="col-12">
     <div id="container"></div>
+
 </div>
 <script src="https://code.highcharts.com/9.1.0/highcharts.js"></script>
 <script>
     var seriesData = [];
     var categoriesData = [];
-    fetch('/api/airtravel_chart')
+    fetch('/api/v1/airtravel_chart')
         .then(response => response.json())
         .then(data => {
             seriesData = [];
             data.forEach(element => {
                 seriesData.push(element.count)
-                categoriesData.push(element.year);
+                categoriesData.push(element.SOMITEM_DATATYPE_YEARMONTH);
             });
             buildChart();
         });
@@ -28,16 +29,17 @@
                 text: 'Air Travel Data'
             },
             xAxis: {
-                categories: categoriesData,
+                min: 0,
+                categories: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
                 title: {
-                    text: "Month"
+                    text: "Months"
                 }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Year',
-                    align: 'high'
+                    text: "Amount of passengers",
+                    align: [high]
                 },
                 labels: {
                     overflow: 'justify'
@@ -55,13 +57,21 @@
             },
             series: [
                 {
-                    name:"# Airtravel",
-                    data: seriesData
-                }
+                    name: "1958",
+                    data: [340, 318, 362, 348, 363, 435, 491, 505, 404, 359, 310, 337]
+                },
+                {
+                    name: "1959",
+                    data: [360, 342, 406, 396, 420, 472, 548, 559, 463, 407, 362, 405]
+                },
+                {
+                    name: "1960",
+                    data: [417, 391, 419, 461, 472, 535, 622, 606, 508, 461, 390, 432]
+                },
+
             ]
         });
     }
-
 </script>
 
 {% endblock %}
