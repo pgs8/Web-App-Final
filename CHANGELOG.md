@@ -20,3 +20,4 @@ Feature | added confirm route | Phil | 20210509
 Task | Updated layout template to include nav | Phil | 20210509
 Fix | Changelog link on readme | Phil | 20210509
 Task | Added installation instructions to README for feature 1 | Phil | 20210509
+Fix | Updated layout template to include footer | Phil | 20210509

@@ -163,12 +163,12 @@ def index():
     cursor = mysql.get_db().cursor()
     cursor.execute("SELECT * FROM airtravelInput")
     result = cursor.fetchall()
-    return render_template('index.html', title='Home', airtravels=result)
+    return render_template('index.html', title='Home', airtravels=result, copyright_notice=html_string_license)
 
 
 @app.route("/chart", methods=['GET'])
 def api_airtravel_chartPage():
-    return render_template('chart.html', title='Chart')
+    return render_template('chart.html', title='Chart', copyright_notice=html_string_license)
 
 
 @app.route('/api/v1/airtravel_chart', methods=['GET'])
@@ -186,7 +186,7 @@ def record_view(airtravel_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
-    return render_template('view.html', title='View Form', airtravel=result[0])
+    return render_template('view.html', title='View Form', airtravel=result[0], copyright_notice=html_string_license)
 
 
 @app.route('/edit/<int:airtravel_id>', methods=['GET'])
@@ -195,7 +195,7 @@ def form_edit_get(airtravel_id):
     cursor = mysql.get_db().cursor()
     cursor.execute('SELECT * FROM airtravelInput WHERE id=%s', airtravel_id)
     result = cursor.fetchall()
-    return render_template('edit.html', title='Edit Form', airtravel=result[0])
+    return render_template('edit.html', title='Edit Form', airtravel=result[0], copyright_notice=html_string_license)
 
 
 @app.route('/edit/<int:airtravel_id>', methods=['POST'])
@@ -215,7 +215,7 @@ def form_update_post(airtravel_id):
 
 @app.route('/airtravels/new', methods=['GET'])
 def form_insert_get():
-    return render_template('new.html', title='New Travel Form')
+    return render_template('new.html', title='New Travel Form', copyright_notice=html_string_license)
 
 
 @app.route('/airtravels/new', methods=['POST'])
