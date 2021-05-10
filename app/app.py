@@ -12,7 +12,8 @@ app = Flask(__name__)
 mysql = MySQL(cursorclass=DictCursor)
 
 sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-html_string_license = Markup(os.environ.get('STRING_COPYRIGHT'))
+html_string_license = Markup(
+    "Copyright &copy; 2021 Phil Stickna and Paola Leiva <br/>Content provided under the MIT License.")
 
 app.config['MYSQL_DATABASE_HOST'] = 'db'
 app.config['MYSQL_DATABASE_USER'] = 'root'
