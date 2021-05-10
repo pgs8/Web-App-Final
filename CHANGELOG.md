@@ -18,3 +18,4 @@ Feature | added logout route, fixed an infinite redirect | Phil | 20210509
 Feature | added register route | Phil | 20210509
 Feature | added confirm route | Phil | 20210509
 Task | Updated layout template to include nav | Phil | 20210509
+Fix | Changelog link on readme | Phil | 20210509
