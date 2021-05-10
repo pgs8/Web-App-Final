@@ -43,7 +43,7 @@ def send_confirm_email(to_email, account_id):
 
 @app.before_request
 def before_request():
-    if request.path == url_for('login') or request.path == url_for('register'):
+    if request.path == url_for('login') or request.path == url_for('register') or url_for('confirm') in request.path:
         return
     elif 'logged_in' in session and session['logged_in'] == True:
         return
@@ -82,6 +82,47 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('login'))
+
+
+@app.route('/confirm', methods=['GET', 'POST'])
+@app.route('/confirm/<int:account_id>', methods=['GET', 'POST'])
+def confirm(account_id=None):
+    if not account_id:
+        return render_template('register.html', title='Register', msg="Invalid confirmation link. Please re-register.",
+                               copyright_notice=html_string_license)
+    elif request.method == 'GET':
+        cursor = mysql.get_db().cursor()
+        cursor.execute("SELECT * FROM accounts WHERE id = %s", account_id)
+        account = cursor.fetchone()
+        if account and account['confirmed']:
+            return render_template('login.html', title='Login', msg="Your email is already confirmed. Please login.",
+                                   copyright_notice=html_string_license)
+        elif account:
+            return render_template('confirm.html', title='Confirm my Account', account_id=account_id,
+                                   msg="Login to confirm your email.", copyright_notice=html_string_license)
+        else:
+            return render_template('register.html', title='Register',
+                                   msg="Invalid confirmation link. Please re-register.",
+                                   copyright_notice=html_string_license)
+    elif request.method == 'POST' and 'username' in request.form and 'password' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        cursor = mysql.get_db().cursor()
+        cursor.execute("SELECT id FROM accounts WHERE username = %s AND password = %s", (username, password))
+        account = cursor.fetchone()
+        if account:
+            cursor.execute("""UPDATE accounts a SET a.confirmed = %s WHERE a.id = %s""", (True, account['id']))
+            mysql.get_db().commit()
+            session['logged_in'] = True
+            session['id'] = account['id']
+            session['username'] = username
+            return redirect(url_for('index'))
+        else:
+            return render_template('confirm.html', title='Confirm my Account', account_id=account_id,
+                                   msg="Incorrect username/password!", copyright_notice=html_string_license)
+    elif request.method == 'POST':
+        return render_template('confirm.html', title='Confirm my Account', account_id=account_id,
+                               msg="Please fill out the form!", copyright_notice=html_string_license)
 
 
 @app.route('/register', methods=['GET', 'POST'])
