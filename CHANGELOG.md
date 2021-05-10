@@ -17,3 +17,4 @@ Feature | redirected non-logged in requests to login form | Phil | 20210509
 Feature | added logout route, fixed an infinite redirect | Phil | 20210509
 Feature | added register route | Phil | 20210509
 Feature | added confirm route | Phil | 20210509
+Task | Updated layout template to include nav | Phil | 20210509
