@@ -30,8 +30,8 @@ def send_confirm_email(to_email, account_id):
         sender = Email(os.environ.get('EMAIL_USERNAME'))
         recipient = To(to_email)
         subject = "Please confirm your email"
-        content = Content("text/plain",
-                          "Click <a href=\"http://0.0.0.0/confirm/" + account_id + "\">here</a> to confirm your email.")
+        content = Content("text/html",
+                          "Click <a href=\"http://127.0.0.1/confirm/%s\">here</a> to confirm your email." % account_id)
         mail = Mail(sender, recipient, subject, content)
         mail_json = mail.get()
         response = sg.client.mail.send.post(request_body=mail_json)
@@ -88,6 +88,32 @@ def logout():
 def register():
     if request.method == 'GET':
         return render_template('register.html', title='Register', copyright_notice=html_string_license)
+    elif request.method == 'POST' and 'username' in request.form and 'password' in request.form and \
+            'email' in request.form:
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        cursor = mysql.get_db().cursor()
+        cursor.execute("SELECT * FROM accounts WHERE email = %s", email)
+        account = cursor.fetchone()
+        if account:
+            return render_template('register.html', title='Register', msg='Email already exists!',
+                                   copyright_notice=html_string_license)
+
+        input_data = (username, password, email, False)
+        sql_insert_query = """INSERT INTO accounts (username, password, email, confirmed) VALUES (%s, %s, %s, %s)"""
+        cursor.execute(sql_insert_query, input_data)
+        mysql.get_db().commit()
+
+        cursor.execute("SELECT id FROM accounts WHERE email = %s", email)
+        account = cursor.fetchone()
+        send_confirm_email(email, account['id'])
+
+        return render_template('login.html', title='Login', msg='Please check your email!',
+                               copyright_notice=html_string_license)
+    elif request.method == 'POST':
+        return render_template('register.html', title='Register', msg="Please fill out the form!",
+                               copyright_notice=html_string_license)
 
 
 @app.route('/', methods=['GET'])
