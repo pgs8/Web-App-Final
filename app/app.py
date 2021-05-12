@@ -1,3 +1,4 @@
+from typing import List, Dict
 import simplejson as json
 import sendgrid
 import os
@@ -166,7 +167,7 @@ def index():
     return render_template('index.html', title='Home', airtravels=result, copyright_notice=html_string_license)
 
 
-@app.route("/chart", methods=['GET'])
+@app.route('/chart', methods=['GET'])
 def api_airtravel_chartPage():
     return render_template('chart.html', title='Chart', copyright_notice=html_string_license)
 
@@ -174,7 +175,7 @@ def api_airtravel_chartPage():
 @app.route('/api/v1/airtravel_chart', methods=['GET'])
 def api_airtravel_stats() -> str:
     cursor = mysql.get_db().cursor()
-    cursor.execute('select YEAR, count(*) as count from airtravelInput group by YEAR')
+    cursor.execute('SELECT * FROM airtravelInput')
     result = cursor.fetchall()
     json_result = json.dumps(result)
     resp = Response(json_result, status=200, mimetype='application/json')
@@ -233,7 +234,7 @@ def form_insert_post():
     return redirect("/", code=302)
 
 
-@app.route('/delete/<int:airtravel_id>', methods=['GET'])
+@app.route('/delete/<int:airtravel_id>', methods=['POST'])
 def form_delete_post(airtravel_id):
     cursor = mysql.get_db().cursor()
     sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
@@ -269,14 +270,14 @@ def api_airtravel_save(airtravel_id) -> str:
 
 @app.route('/api/v1/airtravels/', methods=['POST'])
 def api_add() -> str:
+
     content = request.json
 
     cursor = mysql.get_db().cursor()
     inputData = (content['fldYEAR'], content['fldJAN'], content['fldFEB'],
                  content['fldMAR'], content['fldAPR'], content['fldMAY'], content['fldJUN'], content['fldJUL'],
                  content['fldAUG'], content['fldSEP'], content['fldOCT'], content['fldNOV'], content['fldDECE'])
-    sql_insert_query = """INSERT INTO airtravelInput (`YEAR`, `JAN`, `FEB`, `MAR`, `APR`, `MAY`, 'JUN', 'JUL', 'AUG',
-    'SEP', 'OCT', 'NOV', 'DECE') 
+    sql_insert_query = """INSERT INTO airtravelInput (YEAR, JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DECE) 
     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s) """
     cursor.execute(sql_insert_query, inputData)
     mysql.get_db().commit()
@@ -284,7 +285,7 @@ def api_add() -> str:
     return resp
 
 
-@app.route('/api/v1/<int:airtravel_id>', methods=['DELETE'])
+@app.route('/api/v1/airtravels/<int:airtravel_id>', methods=['DELETE'])
 def api_delete(airtravel_id) -> str:
     cursor = mysql.get_db().cursor()
     sql_delete_query = """DELETE FROM airtravelInput WHERE id = %s """
@@ -295,4 +296,4 @@ def api_delete(airtravel_id) -> str:
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
